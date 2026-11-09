@@ -95,17 +95,17 @@
 
       <!-- Quick Action Buttons for Stall Organizers -->
       <div class="flex items-center space-x-2">
-        <button id="btn-open-qr" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white transition active:scale-95 border border-white/10" title="Show QR Code for NTnurse.github.io">
+        <button id="btn-open-login" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition active:scale-95 border border-white/10" title="Organizer Tally Access (Password Protected)">
+          <svg class="w-3.5 h-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+          </svg>
+          <span class="hidden sm:inline">Organizer Tally</span>
+        </button>
+        <button id="btn-open-qr" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white transition active:scale-95 border border-white/10" title="Show QR Code for NTnurse.github.io/tshirt">
           <svg class="w-4 h-4 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path>
           </svg>
-          <span class="hidden sm:inline">Stall QR</span>
-        </button>
-        <button id="btn-toggle-admin" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg bg-teal-600 hover:bg-teal-500 text-white transition active:scale-95 shadow-sm" title="View Submissions & Size Tally">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-          </svg>
-          <span id="admin-badge-count" class="bg-white text-teal-800 text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+          <span>Stall QR</span>
         </button>
       </div>
     </div>
@@ -207,7 +207,7 @@
               id="full-name" 
               name="fullName"
               required 
-              placeholder="e.g. Sarah Connor" 
+              placeholder="e.g. Florence Nightingale" 
               class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:border-teal-600 focus:ring-4 focus:ring-teal-100 outline-none text-slate-800 font-medium placeholder:text-slate-400 transition bg-slate-50/50 hover:bg-white text-base"
               autocomplete="name"
             >
@@ -535,118 +535,139 @@
       </div>
     </div>
 
-    <!-- Organizer Dashboard & Live Submissions Drawer (Toggleable) -->
-    <div id="admin-section" class="hidden bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden space-y-0 transition-all duration-300">
-      <div class="bg-brand-navy text-white px-5 py-4 flex items-center justify-between">
-        <div>
-          <h3 class="font-bold text-base flex items-center gap-2">
-            <span>📋</span> Organizer Tally &amp; Inventory Hub
-          </h3>
-          <p class="text-xs text-slate-300">Live tally of sizes for NTnurse.github.io campaign</p>
+      <!-- Password Prompt Modal for Organizer Access -->
+  <div id="password-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center space-y-4 shadow-2xl relative border border-slate-100 animate-fadeIn">
+      <button id="btn-close-password-modal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-2 rounded-full hover:bg-slate-100 transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+
+      <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto shadow-inner text-xl">
+        🔒
+      </div>
+
+      <div class="space-y-1">
+        <h3 class="text-lg font-black text-slate-900">Organizer Access</h3>
+        <p class="text-xs text-slate-500">
+          Enter password to view size tallies, registrant names, and export data.
+        </p>
+      </div>
+
+      <div class="space-y-2 text-left">
+        <label for="organizer-pass" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Passcode</label>
+        <input 
+          type="password" 
+          id="organizer-pass" 
+          placeholder="Enter organizer password..." 
+          class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-teal-600 focus:ring-4 focus:ring-teal-100 outline-none text-slate-800 font-semibold text-sm transition"
+        >
+        <p id="pass-error" class="text-xs text-rose-600 font-medium hidden flex items-center gap-1">
+          <span>✕</span> Incorrect password. Default is <code class="font-bold">ANMF2026</code>
+        </p>
+      </div>
+
+      <div class="pt-2 flex gap-2">
+        <button 
+          type="button" 
+          id="btn-submit-pass" 
+          class="flex-1 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-600 text-white font-bold text-xs shadow transition active:scale-95"
+        >
+          Unlock Tally
+        </button>
+        <button 
+          type="button" 
+          id="btn-cancel-pass" 
+          class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Password-Protected Organizer Tally & Inventory Modal -->
+  <div id="admin-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-7 text-left space-y-5 shadow-2xl relative border border-slate-100 my-8">
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">📊</span>
+          <div>
+            <h3 class="font-black text-base text-slate-900">Protected Organizer Tally &amp; Inventory</h3>
+            <p class="text-[11px] text-slate-500">Confidential member responses • Visible only to authorized organizers</p>
+          </div>
         </div>
-        <button id="btn-close-admin" class="text-slate-300 hover:text-white p-1 rounded-lg hover:bg-white/10 transition">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
+        <button id="btn-close-admin-modal" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1 transition">
+          <span>🔒 Lock &amp; Close</span>
         </button>
       </div>
 
-      
-      <!-- Google Sheet Sync Status Bar & Config -->
-      <div class="p-5 bg-teal-50/60 border-b border-teal-100 space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span class="text-xs font-bold text-teal-950 uppercase tracking-wider">Live Google Sheet Sync</span>
-          </div>
+      <!-- Live Size Inventory Breakdown Grid -->
+      <div class="space-y-2 bg-slate-50 rounded-2xl p-4 border border-slate-200">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Size Breakdown</span>
+          <span id="total-claimed-badge" class="text-xs font-bold text-teal-800 bg-teal-100 px-2.5 py-0.5 rounded-full">0 Total Registered</span>
+        </div>
+        <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center" id="size-tally-grid">
+          <!-- Dynamic size tally cards -->
+        </div>
+      </div>
+
+      <!-- Actions Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+        <div class="flex items-center gap-2">
           <a 
             href="https://docs.google.com/spreadsheets/d/1QdhyQg0Bh0LXHO8NGe62z1jdhYpv5_fPdanbBgKpYJQ/edit" 
             target="_blank" 
-            rel="noopener noreferrer"
-            class="text-xs font-bold text-teal-800 hover:text-teal-900 underline flex items-center gap-1"
+            rel="noopener noreferrer" 
+            class="px-3 py-1.5 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold flex items-center gap-1.5 transition"
           >
-            <span>Open ANMF NT Google Sheet</span>
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            <span>📄</span>
+            <span>Open Google Sheet</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
           </a>
+          <button id="btn-export-csv" class="px-3 py-1.5 rounded-lg bg-teal-700 hover:bg-teal-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            <span>Download CSV</span>
+          </button>
         </div>
-        
-        <div class="space-y-2">
-          <label for="input-script-url" class="block text-xs font-semibold text-slate-700">
-            Google Apps Script Web App URL <span class="text-slate-400 font-normal">(connects submissions to your Sheet)</span>
-          </label>
-          <div class="flex gap-2">
-            <input 
-              type="url" 
-              id="input-script-url" 
-              placeholder="https://script.google.com/macros/s/.../exec" 
-              class="flex-1 px-3 py-2 rounded-xl border border-slate-300 focus:border-teal-600 focus:ring-2 focus:ring-teal-100 text-xs font-mono outline-none bg-white"
-            >
-            <button 
-              type="button" 
-              id="btn-save-script-url" 
-              class="px-3.5 py-2 rounded-xl bg-teal-700 hover:bg-teal-600 text-white font-bold text-xs shadow-sm transition active:scale-95"
-            >
-              Save URL
-            </button>
-          </div>
-          <p id="sync-status-msg" class="text-[11px] text-teal-700 flex items-center gap-1">
-            <span>ℹ️</span> Submissions will automatically append as new rows to your Google Sheet.
-          </p>
-        </div>
+        <button id="btn-clear-data" class="px-2.5 py-1.5 rounded-lg border border-rose-200 text-rose-600 hover:bg-rose-50 text-[11px] font-semibold transition">
+          Clear Local Data
+        </button>
       </div>
 
-      <!-- Size Inventory Summary Bar -->
-      <div class="p-5 bg-slate-50 border-b border-slate-200">
-        <div class="flex items-center justify-between mb-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-slate-600">Size Breakdown</span>
-          <span id="total-claimed-badge" class="text-xs font-bold text-teal-800 bg-teal-100 px-2 py-0.5 rounded-full">0 Total Registered</span>
+      <!-- Confidential Submissions Table -->
+      <div class="space-y-1">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-700 px-1">
+          <span>Registered Claimants</span>
+          <span class="text-[11px] text-slate-400 font-normal">Stored securely</span>
         </div>
-        
-        <div class="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center" id="size-tally-grid">
-          <!-- Dynamically populated size tally cards -->
-        </div>
-      </div>
-
-      <!-- Action buttons & Submissions list -->
-      <div class="p-5 space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <h4 class="text-sm font-bold text-slate-800">Recorded Claimants</h4>
-          <div class="flex items-center gap-2">
-            <button id="btn-export-csv" class="px-3 py-1.5 rounded-lg bg-teal-700 hover:bg-teal-600 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition active:scale-95">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-              </svg>
-              <span>Export CSV</span>
-            </button>
-            <button id="btn-clear-data" class="px-3 py-1.5 rounded-lg border border-rose-200 text-rose-600 hover:bg-rose-50 text-xs font-semibold transition active:scale-95">
-              Reset Data
-            </button>
-          </div>
-        </div>
-
-        <!-- Table of submissions -->
-        <div class="overflow-x-auto rounded-xl border border-slate-200 max-h-72 custom-scroll">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 max-h-60 custom-scroll">
           <table class="w-full text-left text-xs text-slate-600">
             <thead class="bg-slate-100 text-slate-700 uppercase font-semibold sticky top-0 border-b border-slate-200">
               <tr>
-                <th class="px-3 py-2.5">#</th>
-                <th class="px-3 py-2.5">Name</th>
-                <th class="px-3 py-2.5">Size</th>
-                <th class="px-3 py-2.5">Workplace</th>
-                <th class="px-3 py-2.5">Time</th>
+                <th class="px-3 py-2">#</th>
+                <th class="px-3 py-2">Name</th>
+                <th class="px-3 py-2">Size</th>
+                <th class="px-3 py-2">Workplace</th>
+                <th class="px-3 py-2">Time</th>
               </tr>
             </thead>
             <tbody id="submissions-tbody" class="divide-y divide-slate-100 bg-white">
               <tr>
-                <td colspan="5" class="px-3 py-6 text-center text-slate-400 italic">No submissions recorded yet today.</td>
+                <td colspan="5" class="px-3 py-6 text-center text-slate-400 italic">No submissions recorded yet.</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-    </div>
 
-  </main>
+    </div>
+  </div>
 
   <!-- Interactive T-Shirt Preview & Sizing Chart Modal -->
   <div id="sizing-modal" class="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
@@ -903,10 +924,15 @@
   <!-- Application Logic -->
   <script>
     (function() {
-      // Data state
-      const STORAGE_KEY = 'anmf_nt_tshirt_claims';
+      // =========================================================================
+      // GOOGLE SHEETS WEB APP URL
+      // Paste your deployed Google Apps Script URL between the quotes below:
+      // =========================================================================
+      const GOOGLE_SHEETS_SCRIPT_URL = ''; // e.g. 'https://script.google.com/macros/s/.../exec'
+      // =========================================================================
+
       const GITHUB_URL = 'https://NTnurse.github.io/tshirt';
-      let submissions = [];
+let submissions = [];
 
       // Safe local storage load
       try {
@@ -949,16 +975,179 @@
       const sizingModal = document.getElementById('sizing-modal');
       const tableSelectButtons = document.querySelectorAll('.btn-select-table-size');
 
-      // Admin Dashboard Elements
-      const btnToggleAdmin = document.getElementById('btn-toggle-admin');
-      const btnCloseAdmin = document.getElementById('btn-close-admin');
-      const adminSection = document.getElementById('admin-section');
-      const adminBadgeCount = document.getElementById('admin-badge-count');
+      
+      // Password Protection for Organizer Tally
+      const ORGANIZER_PASSWORD = 'ANMF2026';
+      let isOrganizerUnlocked = false;
+
+      const btnOpenLogin = document.getElementById('btn-open-login');
+      const passwordModal = document.getElementById('password-modal');
+      const btnClosePassModal = document.getElementById('btn-close-password-modal');
+      const btnCancelPass = document.getElementById('btn-cancel-pass');
+      const btnSubmitPass = document.getElementById('btn-submit-pass');
+      const organizerPassInput = document.getElementById('organizer-pass');
+      const passError = document.getElementById('pass-error');
+
+      const adminModal = document.getElementById('admin-modal');
+      const btnCloseAdminModal = document.getElementById('btn-close-admin-modal');
       const totalClaimedBadge = document.getElementById('total-claimed-badge');
       const sizeTallyGrid = document.getElementById('size-tally-grid');
       const submissionsTbody = document.getElementById('submissions-tbody');
       const btnExportCsv = document.getElementById('btn-export-csv');
       const btnClearData = document.getElementById('btn-clear-data');
+
+      function openPasswordPrompt() {
+        if (isOrganizerUnlocked) {
+          openAdminModal();
+        } else {
+          passError.classList.add('hidden');
+          organizerPassInput.value = '';
+          passwordModal.classList.remove('hidden');
+          setTimeout(() => organizerPassInput.focus(), 100);
+        }
+      }
+
+      function closePasswordPrompt() {
+        passwordModal.classList.add('hidden');
+      }
+
+      function verifyPassword() {
+        const entered = organizerPassInput.value.trim();
+        if (entered.toUpperCase() === ORGANIZER_PASSWORD) {
+          isOrganizerUnlocked = true;
+          passwordModal.classList.add('hidden');
+          openAdminModal();
+          showToast('Organizer Dashboard Unlocked!', '🔓');
+        } else {
+          passError.classList.remove('hidden');
+          organizerPassInput.focus();
+        }
+      }
+
+      btnOpenLogin.addEventListener('click', openPasswordPrompt);
+      btnClosePassModal.addEventListener('click', closePasswordPrompt);
+      btnCancelPass.addEventListener('click', closePasswordPrompt);
+      btnSubmitPass.addEventListener('click', verifyPassword);
+      organizerPassInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') verifyPassword();
+      });
+
+      function openAdminModal() {
+        renderAdminDashboard();
+        adminModal.classList.remove('hidden');
+      }
+
+      function closeAdminModal() {
+        adminModal.classList.add('hidden');
+        isOrganizerUnlocked = false; // re-lock on close
+        showToast('Dashboard locked', '🔒');
+      }
+
+      btnCloseAdminModal.addEventListener('click', closeAdminModal);
+      adminModal.addEventListener('click', (e) => {
+        if (e.target === adminModal) closeAdminModal();
+      });
+
+      function renderAdminDashboard() {
+        if (!totalClaimedBadge || !sizeTallyGrid) return;
+        const total = submissions.length;
+        totalClaimedBadge.textContent = total + ' Total Registered';
+
+        const sizeCounts = {
+          '3XS': 0, '2XS': 0, 'XS': 0, 'S': 0, 'M': 0, 'L': 0, 'XL': 0, '2XL': 0, '3XL': 0
+        };
+
+        submissions.forEach(s => {
+          if (sizeCounts[s.size] !== undefined) {
+            sizeCounts[s.size]++;
+          }
+        });
+
+        // Display S-3XL in grid, plus any smaller sizes if ordered
+        const sizesToShow = ['S', 'M', 'L', 'XL', '2XL', '3XL'];
+        if (sizeCounts['3XS'] > 0 || sizeCounts['2XS'] > 0 || sizeCounts['XS'] > 0) {
+          sizesToShow.unshift('XS');
+          if (sizeCounts['2XS'] > 0 || sizeCounts['3XS'] > 0) sizesToShow.unshift('2XS', '3XS');
+        }
+
+        sizeTallyGrid.innerHTML = sizesToShow.map(sz => {
+          const count = sizeCounts[sz] || 0;
+          const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+          return `
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-sm flex flex-col items-center justify-center">
+              <span class="text-xs font-bold text-slate-500">${sz}</span>
+              <span class="text-lg font-black text-slate-900 my-0.5">${count}</span>
+              <span class="text-[10px] text-teal-700 font-semibold">${pct}%</span>
+            </div>
+          `;
+        }).join('');
+
+        if (submissions.length === 0) {
+          submissionsTbody.innerHTML = `
+            <tr>
+              <td colspan="5" class="px-3 py-6 text-center text-slate-400 italic">No submissions recorded yet.</td>
+            </tr>
+          `;
+        } else {
+          submissionsTbody.innerHTML = submissions.map((sub, idx) => `
+            <tr class="hover:bg-slate-50 transition">
+              <td class="px-3 py-2 text-slate-400 font-mono">${submissions.length - idx}</td>
+              <td class="px-3 py-2 font-bold text-slate-800">${escapeHtml(sub.name)}</td>
+              <td class="px-3 py-2">
+                <span class="inline-block px-2 py-0.5 rounded font-black text-xs bg-slate-100 text-slate-800 border border-slate-300">
+                  ${sub.size}
+                </span>
+              </td>
+              <td class="px-3 py-2 text-slate-600 truncate max-w-[150px]">${escapeHtml(sub.workplace)}</td>
+              <td class="px-3 py-2 text-slate-400">${sub.timestamp}</td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // Export CSV
+      if (btnExportCsv) {
+        btnExportCsv.addEventListener('click', () => {
+          if (submissions.length === 0) {
+            showToast('No submissions to export yet.', 'ℹ');
+            return;
+          }
+          const headers = ['ID', 'Full Name', 'Workplace', 'T-Shirt Size', 'ANMF Member', 'Timestamp'];
+          const rows = submissions.map(s => [
+            s.id,
+            `"${(s.name || '').replace(/"/g, '""')}"`,
+            `"${(s.workplace || '').replace(/"/g, '""')}"`,
+            s.size,
+            s.isMember ? 'Yes' : 'No',
+            s.timestamp
+          ]);
+          const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement('a');
+          link.setAttribute('href', encodedUri);
+          link.setAttribute('download', `ANMF_NT_TShirt_Claims_${new Date().toISOString().slice(0,10)}.csv`);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          showToast('CSV export downloaded!');
+        });
+      }
+
+      // Clear Data
+      if (btnClearData) {
+        btnClearData.addEventListener('click', () => {
+          if (submissions.length === 0) return;
+          submissions = [];
+          try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+          renderAdminDashboard();
+          showToast('Local records cleared.', '✓');
+        });
+      }
 
       // QR Modal Elements
       const btnOpenQr = document.getElementById('btn-open-qr');
@@ -1094,65 +1283,33 @@
 
       // Form Submission Validation & Record
       
-      // Google Sheets Webhook Configuration
-      const SCRIPT_STORAGE_KEY = 'anmf_nt_google_script_url';
-      let googleScriptUrl = '';
-      try {
-        googleScriptUrl = localStorage.getItem(SCRIPT_STORAGE_KEY) || '';
-      } catch (e) {
-        console.warn('LocalStorage error for script url:', e);
-      }
-
-      const inputScriptUrl = document.getElementById('input-script-url');
-      const btnSaveScriptUrl = document.getElementById('btn-save-script-url');
-      const syncStatusMsg = document.getElementById('sync-status-msg');
-
-      if (inputScriptUrl && googleScriptUrl) {
-        inputScriptUrl.value = googleScriptUrl;
-        if (syncStatusMsg) {
-          syncStatusMsg.innerHTML = '<span class="text-emerald-700 font-bold">✓ Connected:</span> Live Google Sheet sync is enabled!';
-        }
-      }
-
-      if (btnSaveScriptUrl && inputScriptUrl) {
-        btnSaveScriptUrl.addEventListener('click', () => {
-          const val = inputScriptUrl.value.trim();
-          googleScriptUrl = val;
-          try {
-            localStorage.setItem(SCRIPT_STORAGE_KEY, val);
-          } catch (e) {
-            console.warn('LocalStorage save error:', e);
-          }
-          if (syncStatusMsg) {
-            if (val) {
-              syncStatusMsg.innerHTML = '<span class="text-emerald-700 font-bold">✓ Saved!</span> New submissions will post directly to your Google Sheet.';
-            } else {
-              syncStatusMsg.textContent = 'Google Sheet URL removed. Responses will only be stored locally in browser.';
-            }
-          }
-          showToast('Google Sheet settings saved!', '✓');
-        });
-      }
-
+      
       function sendToGoogleSheet(record) {
-        if (!googleScriptUrl) return;
+        // Check script URL from constant or saved storage
+        let targetUrl = GOOGLE_SHEETS_SCRIPT_URL;
+        if (!targetUrl) {
+          try {
+            targetUrl = localStorage.getItem('anmf_nt_google_script_url') || '';
+          } catch(e) {}
+        }
+        if (!targetUrl) return;
+
         try {
-          fetch(googleScriptUrl, {
+          fetch(targetUrl, {
             method: 'POST',
             mode: 'no-cors',
-            headers: {
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(record)
           }).then(() => {
-            console.log('Dispatched to Google Sheet successfully');
+            console.log('Submission sent to Google Sheet');
           }).catch(err => {
-            console.warn('Fetch to Google Sheet failed:', err);
+            console.warn('Google Sheet fetch error:', err);
           });
         } catch (err) {
           console.warn('Error sending to Google Sheet:', err);
         }
       }
+
 
       btnSubmit.addEventListener('click', () => {
         let hasError = false;
@@ -1209,7 +1366,7 @@
         sendToGoogleSheet(record);
 
         // Refresh admin tally
-        renderAdminDashboard();
+        
         showToast('T-Shirt size request registered!');
       });
 
@@ -1241,58 +1398,7 @@
       });
 
       // Admin Dashboard Render & Logic
-      function renderAdminDashboard() {
-        const total = submissions.length;
-        adminBadgeCount.textContent = total;
-        totalClaimedBadge.textContent = total + ' Total Registered';
-
-        const sizeCounts = {
-          'S': 0,
-          'M': 0,
-          'L': 0,
-          'XL': 0,
-          '2XL': 0,
-          '3XL': 0
-        };
-
-        submissions.forEach(s => {
-          if (sizeCounts[s.size] !== undefined) {
-            sizeCounts[s.size]++;
-          }
-        });
-
-        // Render Size Tally Cards
-        sizeTallyGrid.innerHTML = Object.entries(sizeCounts).map(([sz, count]) => `
-          <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-sm flex flex-col items-center justify-center">
-            <span class="text-xs font-bold text-slate-500">${sz}</span>
-            <span class="text-xl font-black text-slate-900 my-0.5">${count}</span>
-            <span class="text-[10px] text-teal-700 font-semibold">${total > 0 ? Math.round((count / total) * 100) : 0}%</span>
-          </div>
-        `).join('');
-
-        // Render Table Rows
-        if (submissions.length === 0) {
-          submissionsTbody.innerHTML = `
-            <tr>
-              <td colspan="5" class="px-3 py-6 text-center text-slate-400 italic">No submissions recorded yet.</td>
-            </tr>
-          `;
-        } else {
-          submissionsTbody.innerHTML = submissions.map((sub, idx) => `
-            <tr class="hover:bg-slate-50 transition">
-              <td class="px-3 py-2 text-slate-400 font-mono">${submissions.length - idx}</td>
-              <td class="px-3 py-2 font-bold text-slate-800">${escapeHtml(sub.name)}</td>
-              <td class="px-3 py-2">
-                <span class="inline-block px-2 py-0.5 rounded font-black text-xs bg-slate-100 text-slate-800 border border-slate-300">
-                  ${sub.size}
-                </span>
-              </td>
-              <td class="px-3 py-2 text-slate-600 truncate max-w-[150px]">${escapeHtml(sub.workplace)}</td>
-              <td class="px-3 py-2 text-slate-400">${sub.timestamp}</td>
-            </tr>
-          `).join('');
-        }
-      }
+      
 
       function escapeHtml(str) {
         if (!str) return '';
@@ -1302,58 +1408,11 @@
                   .replace(/"/g, '&quot;');
       }
 
-      btnToggleAdmin.addEventListener('click', () => {
-        adminSection.classList.toggle('hidden');
-        if (!adminSection.classList.contains('hidden')) {
-          renderAdminDashboard();
-          adminSection.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
+      
 
-      btnCloseAdmin.addEventListener('click', () => {
-        adminSection.classList.add('hidden');
-      });
+      
 
-      // Export CSV
-      btnExportCsv.addEventListener('click', () => {
-        if (submissions.length === 0) {
-          showToast('No submissions to export yet.', 'ℹ');
-          return;
-        }
-
-        const headers = ['ID', 'Full Name', 'Workplace', 'T-Shirt Size', 'ANMF Member', 'Timestamp'];
-        const rows = submissions.map(s => [
-          s.id,
-          `"${(s.name || '').replace(/"/g, '""')}"`,
-          `"${(s.workplace || '').replace(/"/g, '""')}"`,
-          s.size,
-          s.isMember ? 'Yes' : 'No',
-          s.timestamp
-        ]);
-
-        const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement('a');
-        link.setAttribute('href', encodedUri);
-        link.setAttribute('download', `ANMF_NT_TShirt_Claims_MPLookup_${new Date().toISOString().slice(0,10)}.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        showToast('CSV export downloaded successfully!');
-      });
-
-      // Clear Data handler
-      btnClearData.addEventListener('click', () => {
-        if (submissions.length === 0) return;
-        submissions = [];
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-        } catch (e) {
-          console.warn('LocalStorage error:', e);
-        }
-        renderAdminDashboard();
-        showToast('All claim records cleared.', '✓');
-      });
+      
 
       // QR Code Generator & Modal Logic configured for NTnurse.github.io
       let qrGenerated = false;
@@ -1442,7 +1501,7 @@
       }
 
       // Initial render of admin count badge
-      renderAdminDashboard();
+      
 
     })();
   </script>
