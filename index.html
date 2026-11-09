@@ -220,27 +220,6 @@
           </p>
         </div>
 
-        <!-- Optional Field: Workplace / Facility -->
-        <div class="space-y-1.5">
-          <label for="workplace" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider">
-            Workplace / Hospital / Clinic <span class="text-slate-400 font-normal lowercase">(optional)</span>
-          </label>
-          <div class="relative">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-              </svg>
-            </div>
-            <input 
-              type="text" 
-              id="workplace" 
-              name="workplace"
-              placeholder="" 
-              class="w-full pl-11 pr-4 py-2.5 rounded-xl border border-slate-200 focus:border-teal-600 focus:ring-2 focus:ring-teal-100 outline-none text-slate-800 text-sm placeholder:text-slate-400 transition bg-slate-50/50 hover:bg-white"
-            >
-          </div>
-        </div>
-
         <!-- Field 2: T-Shirt Size Drop Down & Sizing Helpers -->
         <div class="space-y-2.5">
           <div class="flex items-center justify-between">
@@ -947,8 +926,7 @@ let submissions = [];
       // DOM Elements
       const form = document.getElementById('tshirt-form');
       const fullNameInput = document.getElementById('full-name');
-      const workplaceInput = document.getElementById('workplace');
-      const tshirtSizeSelect = document.getElementById('tshirt-size');
+            const tshirtSizeSelect = document.getElementById('tshirt-size');
       const sizePills = document.querySelectorAll('.size-pill');
 
       const memberYesRadio = document.getElementById('member-yes');
@@ -1315,8 +1293,7 @@ let submissions = [];
         let hasError = false;
         const nameVal = fullNameInput.value.trim();
         const sizeVal = tshirtSizeSelect.value;
-        const workplaceVal = workplaceInput.value.trim();
-
+        
         if (!nameVal) {
           document.getElementById('name-error').classList.remove('hidden');
           fullNameInput.focus();
@@ -1340,7 +1317,7 @@ let submissions = [];
         const record = {
           id: 'claim_' + Date.now(),
           name: nameVal,
-          workplace: workplaceVal || 'ED',
+          workplace: 'ED',
           size: sizeVal,
           isMember: true,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
@@ -1373,8 +1350,7 @@ let submissions = [];
       // Reset Form to register another member
       btnResetForm.addEventListener('click', () => {
         fullNameInput.value = '';
-        workplaceInput.value = '';
-        tshirtSizeSelect.value = '';
+                tshirtSizeSelect.value = '';
         updatePillsUI('');
         memberYesRadio.checked = false;
         memberNoRadio.checked = false;
